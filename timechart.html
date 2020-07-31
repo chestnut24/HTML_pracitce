@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" style="height: 100%">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta charset="UTF-8">
     <title>Map</title>
@@ -41,7 +42,7 @@
             width: 100px;
             height: 40px;
             line-height: 40px;
-            border-radius: 20px;
+            border-radius: 20px;-
             background-color: #5184F7;
             text-align: center;
             cursor: pointer;
@@ -398,7 +399,7 @@
         ];
         var oneDay = 24 * 3600 * 1000; // 24h*3600s*1000ms
         var fiveMinutes = 300 * 1000; // 5min*1000ms
-        var timestr = '2016/2/18 00:00:00'; // 设置时间格式
+        var timestr = '2020/07/18 00:00:00'; // 设置时间格式
         var startTime = +new Date(timestr) - fiveMinutes; // 按照时间格式设置初始时间
 
         //把new Date出来的时间格式转换为data123中的日期格式
@@ -443,6 +444,7 @@
                 splitNumber: 24
             },
             yAxis: {
+                // boundaryGap: [0, '50%'],
                 type: 'value',
                 axisLabel: {
                     formatter: '{value} (m/s)'       //给Y轴上的刻度加上单位
@@ -519,12 +521,12 @@
                     label: "middle", // 将警示值放在哪个位置，三个值“start”,"middle","end"  开始
                     data: [
                         {
-                            name: '13.9m/s警戒线',
-                            // type: 'average',
+                            name: '警戒线',
+                            type: 'average',
                             lineStyle: {
                                 color: "#FF365F"
                             },
-                            yAxis: 13.9
+                            yAxis: 900
                         }
                     ],
                 },
