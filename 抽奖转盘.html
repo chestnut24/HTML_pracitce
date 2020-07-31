@@ -1,0 +1,182 @@
+<html>
+
+<head>
+
+    <style type="text/css">
+        .container {
+            width: 400px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px auto;
+            border: 10px solid aquamarine;
+            position: relative;
+        }
+        .content {
+            width: 360px;
+            height: 360px;
+            border: 10px solid red;
+            border-radius: 50%;
+            position: relative;
+            /*transition: 2s ease;*/
+
+            transition: all 4s;
+            overflow: hidden;
+        }
+        /*.content:hover {*/
+        /*    transform: rotate(720deg);*/
+        /*}*/
+        .line {
+            width: 2px;
+            height: 360px;
+            background: red;
+            position: absolute;
+            left: 179px;
+            z-index: 300;
+            /*transform-origin: bottom center;*/
+        }
+        .rectangle {
+            width: 180px;
+            height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /*border: 1px solid black;*/
+            position: absolute;
+            left: 90px;
+            z-index: 10;
+            transform-origin: bottom;
+            overflow: hidden;
+        }
+        .word-content {
+            width: 24px;
+            height: 160px;
+            font-size: 24px;
+            font-weight: bolder;
+            color: red;
+            margin-top: 20px;
+            z-index: 200;
+            position: absolute;
+            left: 168px;
+            transform-origin: bottom;
+            /*border: 1px solid black;*/
+        }
+        .zhengfang {
+            width: 180px;
+            height: 180px;
+            position: absolute;
+            /*left: 90px;*/
+            transform-origin: bottom right;
+        }
+        .sanjiao {
+            width: 0;
+            height: 0;
+            border-top: 180px solid aqua;
+            border-left: 104px solid transparent;
+            z-index: 180;
+            left: 77px;
+            position: absolute;
+
+        }
+        .sanjiao2 {
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-bottom: 100px solid red;
+            position: absolute;
+            left: 190px;
+            top: 90px;
+            z-index: 500;
+
+        }
+        .click-button {
+            width: 100%;
+            margin: 100px auto 50px auto;
+            display: flex;
+            justify-content: center;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="click-button" id="click"><button>点击抽奖</button></div>
+    <div class="container">
+    <div class="sanjiao2"></div>
+    <div class="content" id="cycle_content">
+        <div class="line" style="transform:rotate(30deg)"></div>
+        <div class="line" style="transform:rotate(90deg)"></div>
+        <div class="line" style="transform:rotate(150deg)"></div>
+
+        <div class="rectangle" style="z-index: 100;background: aqua"></div>
+        <div class="word-content">谢谢参与</div>
+        <div class="zhengfang" style="z-index: 105;background: yellow;transform:rotate(120deg);"></div>
+
+        <div class="rectangle" style="transform:rotate(60deg);background: yellow;z-index: 90"></div>
+        <div class="word-content" style="transform:rotate(60deg);">一等奖</div>
+        <div class="zhengfang" style="z-index: 105;background: pink;transform:rotate(180deg);"></div>
+
+        <div class="rectangle" style="transform:rotate(120deg);background: pink;z-index: 80"></div>
+        <div class="word-content" style="transform:rotate(120deg);">二等奖</div>
+        <div class="zhengfang" style="z-index: 105;background: aqua;transform:rotate(240deg);"></div>
+
+        <div class="rectangle" style="transform:rotate(180deg);background: aqua;z-index: 70"></div>
+        <div class="word-content" style="transform:rotate(180deg);">三等奖</div>
+        <div class="zhengfang" style="z-index: 105;background: yellow;transform:rotate(300deg);"></div>
+
+        <div class="rectangle" style="transform:rotate(240deg);background: yellow;z-index: 60"></div>
+        <div class="word-content" style="transform:rotate(240deg);">四等奖</div>
+        <div class="zhengfang" style="z-index: 105;background: pink;"></div>
+
+        <div class="rectangle" style="transform:rotate(300deg);background: pink;z-index: 50"></div>
+        <div class="word-content" style="transform:rotate(300deg);">五等奖</div>
+        <div class="sanjiao"></div>
+
+    </div>
+</div>
+
+    <script>
+        var oTurntable = document.getElementById("cycle_content");
+        var click = document.getElementById("click");
+        var angle = 60; //总共7个扇形区域，每个区域约51.4度
+        var num = 0; //转圈结束后停留的度数
+        var offOn = true; //是否正在抽奖
+        click.onclick = function () {
+            if (offOn) {
+                oTurntable.style.transform = "rotate(0deg)";
+                offOn = !offOn;
+                ratating();
+            }
+        };
+        //旋转
+        function ratating() {
+            var timer = null;
+            var rdm = 0; //随机度数
+            clearInterval(timer);
+            timer = setInterval(function () {
+                if (Math.floor(rdm / 360) < 3) { rdm = Math.floor(Math.random() * 3600); }
+                else {
+                    oTurntable.style.transform = "rotate(" + rdm + "deg)";
+                    clearInterval(timer);
+                    setTimeout(function () {
+                        offOn = !offOn;
+                        num = rdm % 360 + 30;
+                        if (num <= angle * 1) { alert("参与奖"); console.log("rdm=" + rdm + "，num=" + num + "，" + "参与奖"); }
+                        else if (num <= angle * 2) { alert("五等奖"); console.log("rdm=" + rdm + "，num=" + num + "，" + "一等奖"); }
+                        else if (num <= angle * 3) { alert("四等奖"); console.log("rdm=" + rdm + "，num=" + num + "，" + "二等奖"); }
+                        else if (num <= angle * 4) { alert("三等奖"); console.log("rdm=" + rdm + "，num=" + num + "，" + "三等奖"); }
+                        else if (num <= angle * 5) { alert("二等奖"); console.log("rdm=" + rdm + "，num=" + num + "，" + "四等奖"); }
+                        else if (num <= angle * 6) { alert("一等奖"); console.log("rdm=" + rdm + "，num=" + num + "，" + "五等奖"); }
+                    }, 4000);
+                }
+            }, 30);
+        }
+    </script>
+
+
+</body>
+
+</html>
